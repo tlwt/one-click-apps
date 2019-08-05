@@ -1,0 +1,52 @@
+{
+    "captainVersion": "1",
+    "documentation": "Taken from https://hub.docker.com/r/plexinc/pms-docker/",
+    "dockerCompose": {
+        "version": "2",
+        "services": {
+            "$$cap_appname": {
+                "image": "plexinc/pms-docker:$$cap_plex_version",
+                "volumes": [
+                  "$$cap_appname-config-plex:/config",
+                  "$$cap_appname-tvshows:/tvshows",
+                  "$$cap_appname-movies:/movies"
+                ],
+                "ports": [
+                  "1900:1900",
+                  "3005:3005",
+                  "5353:5353",
+                  "8324:8324",
+                  "32400:32400",
+                  "32469:32469"
+                ],
+                "containerHttpPort": "32400",
+                "restart": "always",
+                "environment": {
+                  "PUID": "1000",
+                  "PGID": "1000",
+                  "TZ": "Europe/Berlin",
+                  "PLEX_CLAIM": "$$cap_plex_claim"
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "Media setup for Plex.\n"
+    },
+    "variables": [
+        {
+            "id": "$$cap_plex_version",
+            "label": "Plex Version",
+            "defaultValue": "1.16.3.1402-22929c8a2",
+            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/plexinc/pms-docker/tags",
+            "validRegex": ""
+        },
+        {
+            "id": "$$cap_plex_claim",
+            "label": "Plex Claim",
+            "defaultValue": "",
+            "description": "Go to https://www.plex.tv/claim/ to get one - its only valid 4 minutes!",
+            "validRegex": ""
+        }
+    ]
+}
